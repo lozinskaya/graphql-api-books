@@ -36,6 +36,7 @@
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.59.11",
     "@typescript-eslint/parser": "^5.59.11",
+    "cz-customizable": "^7.0.0",
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -73,5 +74,13 @@
   "bugs": {
     "url": "https://github.com/lozinskaya/graphql-api-books/issues"
   },
-  "homepage": "https://github.com/lozinskaya/graphql-api-books#readme"
+  "homepage": "https://github.com/lozinskaya/graphql-api-books#readme",
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "config/git/commitizen.js"
+    }
+  }
 }
