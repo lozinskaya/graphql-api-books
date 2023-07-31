@@ -2,6 +2,7 @@ type Author {
   id: Int!
   firstName: String!
   lastName: String!
+  books: [Book]
 }
 
 input CreateAuthorInput {
@@ -10,7 +11,6 @@ input CreateAuthorInput {
 }
 
 type Query {
-  authors: [Author]!
   author(id: Int!): Author
 }
 

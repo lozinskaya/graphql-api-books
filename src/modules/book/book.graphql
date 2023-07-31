@@ -6,6 +6,5 @@ type Book {
   publisher: Publisher
 }
 
-type Query {
-  books: [Book]!
-}
+# type Query {
+# }

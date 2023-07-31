@@ -11,12 +11,21 @@ export class CCommonService {
     private readonly bookService: CBookService
   ) {}
 
-  findAll() {
+  findBooks() {
     return this.bookService.findAll().map((book) => {
       return {
         ...book,
         authors: book.authorsIds.map((authorId) => this.authorService.findOne(authorId)),
         publisher: this.publisherService.findOne(book.publisherId),
+      };
+    });
+  }
+
+  findAuthors() {
+    return this.authorService.findAll().map((author) => {
+      return {
+        ...author,
+        books: this.bookService.findAll().filter((book) => book.authorsIds.includes(author.id)),
       };
     });
   }

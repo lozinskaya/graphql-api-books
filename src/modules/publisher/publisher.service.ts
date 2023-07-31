@@ -7,6 +7,10 @@ export class CPublisherService {
       id: 1,
       title: 'Эксмо',
     },
+    {
+      id: 2,
+      title: 'АСТ',
+    },
   ];
 
   findAll() {

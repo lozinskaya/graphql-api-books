@@ -7,7 +7,12 @@ export class CCommonResolver {
   constructor(private readonly commonService: CCommonService) {}
 
   @Query('books')
-  findAll() {
-    return this.commonService.findAll();
+  findBooks() {
+    return this.commonService.findBooks();
+  }
+
+  @Query('authors')
+  findAuthors() {
+    return this.commonService.findAuthors();
   }
 }

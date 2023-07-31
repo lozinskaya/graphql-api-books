@@ -7,11 +7,6 @@ import { CCreateAuthorInput } from './dto/create-author.input';
 export class CAuthorResolver {
   constructor(private readonly authorService: CAuthorService) {}
 
-  @Query('authors')
-  findAll() {
-    return this.authorService.findAll();
-  }
-
   @Mutation('createAuthor')
   createAuthor(@Args('createAuthorInput') createAuthorInput: CCreateAuthorInput) {
     return this.authorService.create(createAuthorInput);
