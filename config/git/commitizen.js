@@ -32,6 +32,7 @@ module.exports = {
   // Область. Она характеризует фрагмент кода, которую затронули изменения
   scopes: [
     { name: "commitizen" },
+    { name: "commitlint" },
     { name: "git" },
     { name: "scripts" },
     { name: "components" },
