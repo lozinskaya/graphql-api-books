@@ -38,6 +38,7 @@ module.exports = {
     { name: 'catalog' },
     { name: 'product' },
     { name: 'author' },
+    { name: 'book' },
   ],
 
   // Возможность задать спец ОБЛАСТЬ для определенного типа коммита (пример для 'fix')
