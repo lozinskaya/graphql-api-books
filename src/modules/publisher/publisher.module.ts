@@ -5,5 +5,6 @@ import { CPublisherService } from './publisher.service';
 
 @Module({
   providers: [CPublisherResolver, CPublisherService],
+  exports: [CPublisherService],
 })
 export class CPublisherModule {}

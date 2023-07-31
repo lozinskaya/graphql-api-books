@@ -3,6 +3,7 @@ type Book {
   title: String!
   publishedAt: String!
   authors: [Author]
+  publisher: Publisher
 }
 
 type Query {
