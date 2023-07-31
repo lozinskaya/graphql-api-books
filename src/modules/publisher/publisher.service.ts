@@ -10,7 +10,7 @@ export class CPublisherService {
   ];
 
   findAll() {
-    return this.publishers;
+    return this.publishers.map;
   }
 
   findOne(id: number) {
