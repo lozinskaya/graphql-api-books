@@ -4,6 +4,15 @@ type Author {
   lastName: String!
 }
 
+input CreateAuthorInput {
+  firstName: String!
+  lastName: String!
+}
+
 type Query {
   authors: [Author]!
+}
+
+type Mutation {
+  createAuthor(createAuthorInput: CreateAuthorInput!): Author!
 }

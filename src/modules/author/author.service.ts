@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
+import { CCreateAuthorInput } from './dto/create-author.input';
+
 @Injectable()
 export class CAuthorService {
   private authors = [
@@ -9,5 +11,16 @@ export class CAuthorService {
 
   findAll() {
     return this.authors;
+  }
+
+  create(createAuthorInput: CCreateAuthorInput) {
+    const newAuthor = {
+      id: this.authors.length + 1,
+      ...createAuthorInput,
+    };
+
+    this.authors.push(newAuthor);
+
+    return newAuthor;
   }
 }

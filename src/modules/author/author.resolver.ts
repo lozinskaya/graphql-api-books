@@ -1,6 +1,7 @@
-import { Resolver, Query } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 
 import { CAuthorService } from './author.service';
+import { CCreateAuthorInput } from './dto/create-author.input';
 
 @Resolver('Author')
 export class CAuthorResolver {
@@ -9,5 +10,10 @@ export class CAuthorResolver {
   @Query('authors')
   findAll() {
     return this.authorService.findAll();
+  }
+
+  @Mutation('createAuthor')
+  createAuthor(@Args('createAuthorInput') createAuthorInput: CCreateAuthorInput) {
+    return this.authorService.create(createAuthorInput);
   }
 }
