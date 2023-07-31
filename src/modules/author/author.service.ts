@@ -5,8 +5,10 @@ import { CCreateAuthorInput } from './dto/create-author.input';
 @Injectable()
 export class CAuthorService {
   private authors = [
-    { id: 1, firstName: 'Лев', lastName: 'Толстой' },
+    { id: 1, firstName: 'Федор', lastName: 'Достоевский' },
     { id: 2, firstName: 'Николай', lastName: 'Гоголь' },
+    { id: 3, firstName: 'Илья', lastName: 'Ильф' },
+    { id: 4, firstName: 'Евгений', lastName: 'Петров' },
   ];
 
   findAll() {

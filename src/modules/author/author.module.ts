@@ -13,5 +13,6 @@ import { CAuthorService } from './author.service';
       typePaths: ['**/*.graphql'],
     }),
   ],
+  exports: [CAuthorService],
 })
 export class CAuthorModule {}
