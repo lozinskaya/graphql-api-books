@@ -23,4 +23,8 @@ export class CAuthorService {
 
     return newAuthor;
   }
+
+  findOne(id: number) {
+    return this.authors.find((author) => author.id === id);
+  }
 }

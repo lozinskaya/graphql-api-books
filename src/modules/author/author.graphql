@@ -11,6 +11,7 @@ input CreateAuthorInput {
 
 type Query {
   authors: [Author]!
+  author(id: Int!): Author
 }
 
 type Mutation {

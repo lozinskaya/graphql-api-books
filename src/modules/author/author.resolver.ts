@@ -16,4 +16,9 @@ export class CAuthorResolver {
   createAuthor(@Args('createAuthorInput') createAuthorInput: CCreateAuthorInput) {
     return this.authorService.create(createAuthorInput);
   }
+
+  @Query('author')
+  findOne(@Args('id') id: number) {
+    return this.authorService.findOne(id);
+  }
 }
