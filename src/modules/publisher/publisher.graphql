@@ -1,0 +1,8 @@
+type Publisher {
+  id: Int!
+  title: String!
+}
+
+type Query {
+  publishers: [Publisher]!
+}
