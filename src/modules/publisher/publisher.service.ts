@@ -12,4 +12,8 @@ export class CPublisherService {
   findAll() {
     return this.publishers;
   }
+
+  findOne(id: number) {
+    return this.publishers.find((publisher) => publisher.id === id);
+  }
 }

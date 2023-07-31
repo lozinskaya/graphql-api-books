@@ -1,4 +1,4 @@
-import { Resolver, Query } from '@nestjs/graphql';
+import { Resolver, Query, Args } from '@nestjs/graphql';
 
 import { CPublisherService } from './publisher.service';
 
@@ -9,5 +9,10 @@ export class CPublisherResolver {
   @Query('publishers')
   findAll() {
     return this.publisherService.findAll();
+  }
+
+  @Query('publisher')
+  findOne(@Args('id') id: number) {
+    return this.publisherService.findOne(id);
   }
 }

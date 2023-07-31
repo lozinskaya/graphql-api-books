@@ -5,4 +5,5 @@ type Publisher {
 
 type Query {
   publishers: [Publisher]!
+  publisher(id: Int!): Publisher
 }
