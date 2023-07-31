@@ -15,4 +15,9 @@ export class CCommonResolver {
   findAuthors() {
     return this.commonService.findAuthors();
   }
+
+  @Query('publishers')
+  findAll() {
+    return this.commonService.findPublishers();
+  }
 }

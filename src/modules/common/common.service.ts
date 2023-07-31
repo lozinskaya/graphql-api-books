@@ -29,4 +29,10 @@ export class CCommonService {
       };
     });
   }
+
+  findPublishers() {
+    return this.publisherService.findAll().map((publisher) => {
+      return { ...publisher, books: this.bookService.findAll().filter((book) => book.publisherId === publisher.id) };
+    });
+  }
 }

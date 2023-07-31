@@ -1,9 +1,9 @@
 type Publisher {
   id: Int!
   title: String!
+  books: [Book]
 }
 
 type Query {
-  publishers: [Publisher]!
   publisher(id: Int!): Publisher
 }
