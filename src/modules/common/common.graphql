@@ -1,8 +1,3 @@
-type Query {
-  publishers: [Publisher]!
-  publisher(id: Int!): Publisher
-}
-
 input createBookInput {
   title: String!
   publishedAt: String!

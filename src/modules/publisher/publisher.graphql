@@ -9,6 +9,11 @@ input createPublisherInput {
   title: String!
 }
 
+type Query {
+  publishers: [Publisher]!
+  publisher(id: Int!): Publisher
+}
+
 type Mutation {
   createPublisher(createPublisherInput: createPublisherInput!): Publisher
 }

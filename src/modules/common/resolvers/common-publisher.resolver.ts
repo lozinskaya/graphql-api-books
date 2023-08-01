@@ -1,26 +1,11 @@
-import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 import { CBookService } from 'src/modules/book/book.service';
-import { CPublisherService } from 'src/modules/publisher/publisher.service';
 
 import { CCommonService } from '../common.service';
 
 @Resolver('Publisher')
 export class CCommonPublisherResolver {
-  constructor(
-    private readonly bookService: CBookService,
-    private readonly publisherService: CPublisherService,
-    private readonly commonService: CCommonService
-  ) {}
-
-  @Query('publishers')
-  findPublishers() {
-    return this.publisherService.findAll();
-  }
-
-  @Query('publisher')
-  findPublisher(@Args('id') id: number) {
-    return this.publisherService.findOne(id);
-  }
+  constructor(private readonly bookService: CBookService, private readonly commonService: CCommonService) {}
 
   @ResolveField('books')
   getBooks(@Parent() publisher) {

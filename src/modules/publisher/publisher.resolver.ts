@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 
 import { CCreatePublisherInput } from './dto/create-publisher.input';
 import { CPublisherService } from './publisher.service';
@@ -10,5 +10,15 @@ export class CPublisherResolver {
   @Mutation('createPublisher')
   createPublisher(@Args('createPublisherInput') createPublisherInput: CCreatePublisherInput) {
     return this.publisherService.create(createPublisherInput);
+  }
+
+  @Query('publishers')
+  findPublishers() {
+    return this.publisherService.findAll();
+  }
+
+  @Query('publisher')
+  findPublisher(@Args('id') id: number) {
+    return this.publisherService.findOne(id);
   }
 }
