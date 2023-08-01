@@ -1,6 +1,6 @@
 import { CAuthorModule } from './author';
-import { CBookModule } from './book/book.module';
-import { CCommonModule } from './common/common.module';
-import { CPublisherModule } from './publisher/publisher.module';
+import { CBookModule } from './book';
+import { CCommonModule } from './common';
+import { CPublisherModule } from './publisher';
 
 export const modules = [CAuthorModule, CBookModule, CPublisherModule, CCommonModule];
