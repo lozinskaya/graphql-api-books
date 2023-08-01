@@ -7,17 +7,17 @@ export class CCommonAuthorResolver {
   constructor(private readonly bookService: CBookService, private readonly authorService: CAuthorService) {}
 
   @Query('authors')
-  findAuthors() {
+  findAll() {
     return this.authorService.findAll();
   }
 
   @Query('author')
-  findAuthor(@Args('id') id: number) {
+  findOne(@Args('id') id: number) {
     return this.authorService.findOne(id);
   }
 
   @ResolveField('books')
-  getPublisher(@Parent() author) {
+  getBooks(@Parent() author) {
     return this.bookService.findByAuthorId(author.id);
   }
 }

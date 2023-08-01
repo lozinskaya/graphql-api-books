@@ -16,12 +16,12 @@ export class CCommonBookResolver {
   ) {}
 
   @Query('books')
-  findBooks() {
+  findAll() {
     return this.bookService.findAll();
   }
 
   @Query('book')
-  findBook(@Args('id') id: number) {
+  findOne(@Args('id') id: number) {
     return this.bookService.findOne(id);
   }
 
