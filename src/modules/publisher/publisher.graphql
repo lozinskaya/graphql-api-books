@@ -4,7 +4,3 @@ type Publisher {
   books: [Book]
   authors: [Author]
 }
-
-type Query {
-  publisher(id: Int!): Publisher
-}
