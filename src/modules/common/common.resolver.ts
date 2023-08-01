@@ -17,12 +17,17 @@ export class CCommonResolver {
   }
 
   @Query('author')
-  findOne(@Args('id') id: number) {
+  findAuthor(@Args('id') id: number) {
     return this.commonService.findAuthor(id);
   }
 
   @Query('publishers')
-  findAll() {
+  findPublishers() {
     return this.commonService.findPublishers();
+  }
+
+  @Query('publisher')
+  findPublisher(@Args('id') id: number) {
+    return this.commonService.findPublisher(id);
   }
 }
