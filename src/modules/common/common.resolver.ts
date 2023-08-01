@@ -7,11 +7,6 @@ import { CCommonService } from './common.service';
 export class CCommonResolver {
   constructor(private readonly commonService: CCommonService) {}
 
-  @Mutation('createBook')
-  createBook(@Args('createBookInput') createBookInput: CCreateBookInput) {
-    return this.commonService.createBook(createBookInput);
-  }
-
   @Query('authors')
   findAuthors() {
     return this.commonService.findAuthors();
