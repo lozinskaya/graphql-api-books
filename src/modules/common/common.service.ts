@@ -25,29 +25,6 @@ export class CCommonService {
     throw new Error(name + ' с id = ' + id + ' не существует');
   }
 
-  findPublishers() {
-    return this.publisherService.findAll().map((publisher) => {
-      const books = this.bookService.findByPublisherId(publisher.id);
-      const authors = this.findPublisherAuthors(books);
-
-      return {
-        ...publisher,
-        books,
-        authors,
-      };
-    });
-  }
-
-  findPublisher(id: number) {
-    const books = this.bookService.findByPublisherId(id);
-
-    return {
-      ...this.publisherService.findOne(id),
-      books,
-      authors: this.findPublisherAuthors(books),
-    };
-  }
-
   findPublisherAuthors(
     books: {
       id: number;
