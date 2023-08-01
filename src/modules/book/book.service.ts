@@ -13,6 +13,10 @@ export class CBookService {
     return this.books;
   }
 
+  findOne(id: number) {
+    return this.books.find((book) => book.id === id);
+  }
+
   findByAuthorId(id: number) {
     return this.books.filter((book) => book.authorsIds.includes(id));
   }

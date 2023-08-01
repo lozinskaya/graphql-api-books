@@ -11,6 +11,11 @@ export class CCommonResolver {
     return this.commonService.findBooks();
   }
 
+  @Query('book')
+  findBook(@Args('id') id: number) {
+    return this.commonService.findBook(id);
+  }
+
   @Query('authors')
   findAuthors() {
     return this.commonService.findAuthors();

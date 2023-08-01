@@ -4,3 +4,11 @@ type Publisher {
   books: [Book]
   authors: [Author]
 }
+
+input createPublisherInput {
+  title: String!
+}
+
+type Mutation {
+  createPublisher(createPublisherInput: createPublisherInput!): Publisher
+}

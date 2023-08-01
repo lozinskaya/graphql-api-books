@@ -21,6 +21,16 @@ export class CCommonService {
     });
   }
 
+  findBook(id: number) {
+    const book = this.bookService.findOne(id);
+
+    return {
+      ...book,
+      authors: book.authorsIds.map((authorId) => this.authorService.findOne(authorId)),
+      publisher: this.publisherService.findOne(book.publisherId),
+    };
+  }
+
   findAuthors() {
     return this.authorService.findAll().map((author) => {
       return {
