@@ -33,7 +33,16 @@ export class CCommonService {
   }
 
   createBook(createBookInput: CCreateBookInput) {
-    return this.bookService.create(createBookInput);
+    if (
+      this.isExist(createBookInput.publisherId, this.publisherService, 'Издатель') &&
+      createBookInput.authorsIds.every((authorId) => this.isExist(authorId, this.authorService, 'Автор'))
+    )
+      return this.bookService.create(createBookInput);
+  }
+
+  isExist(id: number, service: { findOne(id: number): any }, name: string) {
+    if (service.findOne(id)) return true;
+    throw new Error(name + ' с id = ' + id + ' не существует');
   }
 
   findAuthors() {
