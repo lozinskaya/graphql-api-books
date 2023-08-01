@@ -5,3 +5,8 @@ type Book {
   authors: [Author]
   publisher: Publisher
 }
+
+type Query {
+  books: [Book]!
+  book(id: Int!): Book
+}
