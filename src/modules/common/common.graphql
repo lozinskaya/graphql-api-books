@@ -1,6 +1,4 @@
 type Query {
-  authors: [Author]!
-  author(id: Int!): Author
   publishers: [Publisher]!
   publisher(id: Int!): Publisher
 }
