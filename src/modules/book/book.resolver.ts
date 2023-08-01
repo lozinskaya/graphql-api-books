@@ -12,6 +12,11 @@ export class CBookResolver {
     private readonly publisherService: CPublisherService
   ) {}
 
+  @Query('books')
+  findBooks() {
+    return this.bookService.findAll();
+  }
+
   @Query('book')
   findBook(@Args('id') id: number) {
     return this.bookService.findOne(id);

@@ -12,26 +12,6 @@ export class CCommonService {
     private readonly bookService: CBookService
   ) {}
 
-  findBooks() {
-    return this.bookService.findAll().map((book) => {
-      return {
-        ...book,
-        authors: book.authorsIds.map((authorId) => this.authorService.findOne(authorId)),
-        publisher: this.publisherService.findOne(book.publisherId),
-      };
-    });
-  }
-
-  // findBook(id: number) {
-  //   const book = this.bookService.findOne(id);
-
-  //   return {
-  //     ...book,
-  //     authors: book.authorsIds.map((authorId) => this.authorService.findOne(authorId)),
-  //     publisher: this.publisherService.findOne(book.publisherId),
-  //   };
-  // }
-
   createBook(createBookInput: CCreateBookInput) {
     if (
       this.isExist(createBookInput.publisherId, this.publisherService, 'Издатель') &&
