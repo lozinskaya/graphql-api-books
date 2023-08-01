@@ -12,11 +12,6 @@ export class CCommonResolver {
     return this.commonService.findBooks();
   }
 
-  @Query('book')
-  findBook(@Args('id') id: number) {
-    return this.commonService.findBook(id);
-  }
-
   @Mutation('createBook')
   createBook(@Args('createBookInput') createBookInput: CCreateBookInput) {
     return this.commonService.createBook(createBookInput);

@@ -22,15 +22,15 @@ export class CCommonService {
     });
   }
 
-  findBook(id: number) {
-    const book = this.bookService.findOne(id);
+  // findBook(id: number) {
+  //   const book = this.bookService.findOne(id);
 
-    return {
-      ...book,
-      authors: book.authorsIds.map((authorId) => this.authorService.findOne(authorId)),
-      publisher: this.publisherService.findOne(book.publisherId),
-    };
-  }
+  //   return {
+  //     ...book,
+  //     authors: book.authorsIds.map((authorId) => this.authorService.findOne(authorId)),
+  //     publisher: this.publisherService.findOne(book.publisherId),
+  //   };
+  // }
 
   createBook(createBookInput: CCreateBookInput) {
     if (
