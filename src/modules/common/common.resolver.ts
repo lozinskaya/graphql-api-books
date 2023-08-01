@@ -1,4 +1,4 @@
-import { Query, Resolver } from '@nestjs/graphql';
+import { Query, Resolver, Args } from '@nestjs/graphql';
 
 import { CCommonService } from './common.service';
 
@@ -14,6 +14,11 @@ export class CCommonResolver {
   @Query('authors')
   findAuthors() {
     return this.commonService.findAuthors();
+  }
+
+  @Query('author')
+  findOne(@Args('id') id: number) {
+    return this.commonService.findAuthor(id);
   }
 
   @Query('publishers')

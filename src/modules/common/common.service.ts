@@ -25,9 +25,13 @@ export class CCommonService {
     return this.authorService.findAll().map((author) => {
       return {
         ...author,
-        books: this.bookService.findAll().filter((book) => book.authorsIds.includes(author.id)),
+        books: this.bookService.findByAuthorId(author.id),
       };
     });
+  }
+
+  findAuthor(id: number) {
+    return { ...this.authorService.findOne(id), books: this.bookService.findByAuthorId(id) };
   }
 
   findPublishers() {

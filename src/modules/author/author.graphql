@@ -10,10 +10,6 @@ input CreateAuthorInput {
   lastName: String!
 }
 
-type Query {
-  author(id: Int!): Author
-}
-
 type Mutation {
   createAuthor(createAuthorInput: CreateAuthorInput!): Author!
 }

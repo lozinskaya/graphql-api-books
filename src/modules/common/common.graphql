@@ -1,5 +1,6 @@
 type Query {
   books: [Book]!
   authors: [Author]!
+  author(id: Int!): Author
   publishers: [Publisher]!
 }

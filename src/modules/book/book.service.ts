@@ -12,4 +12,8 @@ export class CBookService {
   findAll() {
     return this.books;
   }
+
+  findByAuthorId(id: number) {
+    return this.books.filter((book) => book.authorsIds.includes(id));
+  }
 }
