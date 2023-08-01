@@ -42,7 +42,7 @@ export class CCommonService {
       return {
         ...publisher,
         books,
-        authors: new Set(authors),
+        authors,
       };
     });
   }
