@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import { Author } from 'src/graphql';
 
 import { CCreateAuthorInput } from './dto/create-author.input';
 
 @Injectable()
 export class CAuthorService {
-  private authors = [
+  private authors: Author[] = [
     { id: 1, firstName: 'Федор', lastName: 'Достоевский' },
     { id: 2, firstName: 'Николай', lastName: 'Гоголь' },
     { id: 3, firstName: 'Илья', lastName: 'Ильф' },

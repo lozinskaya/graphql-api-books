@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { CreateBookInput } from 'src/graphql';
 import { CAuthorService } from 'src/modules/author/author.service';
 import { CBookService } from 'src/modules/book/book.service';
 import { CCreateBookInput } from 'src/modules/book/dto/create-book.input';
@@ -25,15 +26,7 @@ export class CCommonService {
     throw new Error(name + ' с id = ' + id + ' не существует');
   }
 
-  findPublisherAuthors(
-    books: {
-      id: number;
-      title: string;
-      publishedAt: string;
-      authorsIds: number[];
-      publisherId: number;
-    }[]
-  ) {
+  findPublisherAuthors(books: CreateBookInput[]) {
     const authors = books.reduce(
       (acc, book) => acc.concat(book.authorsIds.map((authorId) => this.authorService.findOne(authorId))),
       []

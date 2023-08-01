@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import { Publisher } from 'src/graphql';
 
 import { CCreatePublisherInput } from './dto/create-publisher.input';
 
 @Injectable()
 export class CPublisherService {
-  private publishers = [
+  private publishers: Publisher[] = [
     {
       id: 1,
       title: 'Эксмо',
