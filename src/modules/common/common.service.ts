@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CAuthorService } from 'src/modules/author/author.service';
 import { CBookService } from 'src/modules/book/book.service';
+import { CCreateBookInput } from 'src/modules/book/dto/create-book.input';
 import { CPublisherService } from 'src/modules/publisher/publisher.service';
 
 @Injectable()
@@ -29,6 +30,10 @@ export class CCommonService {
       authors: book.authorsIds.map((authorId) => this.authorService.findOne(authorId)),
       publisher: this.publisherService.findOne(book.publisherId),
     };
+  }
+
+  createBook(createBookInput: CCreateBookInput) {
+    return this.bookService.create(createBookInput);
   }
 
   findAuthors() {

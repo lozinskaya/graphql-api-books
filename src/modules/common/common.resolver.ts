@@ -1,4 +1,5 @@
-import { Query, Resolver, Args } from '@nestjs/graphql';
+import { Query, Resolver, Args, Mutation } from '@nestjs/graphql';
+import { CCreateBookInput } from 'src/modules/book/dto/create-book.input';
 
 import { CCommonService } from './common.service';
 
@@ -14,6 +15,11 @@ export class CCommonResolver {
   @Query('book')
   findBook(@Args('id') id: number) {
     return this.commonService.findBook(id);
+  }
+
+  @Mutation('createBook')
+  createBook(@Args('createBookInput') createBookInput: CCreateBookInput) {
+    return this.commonService.createBook(createBookInput);
   }
 
   @Query('authors')

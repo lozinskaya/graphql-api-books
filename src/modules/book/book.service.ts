@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
+import { CCreateBookInput } from './dto/create-book.input';
+
 @Injectable()
 export class CBookService {
   private books = [
@@ -15,6 +17,14 @@ export class CBookService {
 
   findOne(id: number) {
     return this.books.find((book) => book.id === id);
+  }
+
+  create(book: CCreateBookInput) {
+    const newBook = { id: this.books.length + 1, ...book };
+
+    this.books.push(newBook);
+
+    return newBook;
   }
 
   findByAuthorId(id: number) {

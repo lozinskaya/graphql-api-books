@@ -6,3 +6,14 @@ type Query {
   publishers: [Publisher]!
   publisher(id: Int!): Publisher
 }
+
+input createBookInput {
+  title: String!
+  publishedAt: String!
+  authorsIds: [Int]!
+  publisherId: Int!
+}
+
+type Mutation {
+  createBook(createBookInput: createBookInput!): Book
+}
