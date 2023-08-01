@@ -32,7 +32,17 @@ export class CCommonService {
 
   findPublishers() {
     return this.publisherService.findAll().map((publisher) => {
-      return { ...publisher, books: this.bookService.findAll().filter((book) => book.publisherId === publisher.id) };
+      const books = this.bookService.findAll().filter((book) => book.publisherId === publisher.id);
+      const authors = books.reduce(
+        (acc, book) => acc.concat(book.authorsIds.map((authorId) => this.authorService.findOne(authorId))),
+        []
+      );
+
+      return {
+        ...publisher,
+        books,
+        authors: new Set(authors),
+      };
     });
   }
 }
