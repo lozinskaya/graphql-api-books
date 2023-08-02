@@ -1,0 +1,16 @@
+version: '3.0'
+
+services:
+  graphqlapibooks:
+    container_name: graphqlapibooks
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - 3000:3000
+      - 9229:9229
+    restart: always
+    command: npm run start:dev
