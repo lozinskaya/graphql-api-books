@@ -10,3 +10,7 @@ type Query {
   books: [Book]!
   book(id: Int!): Book
 }
+
+type Subscription {
+  bookAdded: Book
+}

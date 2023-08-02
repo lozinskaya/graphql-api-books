@@ -54,6 +54,10 @@ export class Book {
     publisher?: Nullable<Publisher>;
 }
 
+export abstract class ISubscription {
+    bookAdded?: Nullable<Book>;
+}
+
 export class Publisher {
     id: number;
     title: string;
