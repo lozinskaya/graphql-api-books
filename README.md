@@ -4,9 +4,9 @@
 
 ## Modules
 
-Author - module with schema, query, mutation for Authors
-Book - module with schema, query, mutation for Books
-Publisher - module with schema, query, mutation for Authors
+Author - module with schema, query, mutation for Authors<br />
+Book - module with schema, query, mutation for Books<br />
+Publisher - module with schema, query, mutation for Authors<br />
 Common - common module witch imports author, book and publisher modules for resolve fields
 
 ## Installation with docker
