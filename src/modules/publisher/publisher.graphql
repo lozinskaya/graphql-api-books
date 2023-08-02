@@ -1,0 +1,19 @@
+type Publisher {
+  id: Int!
+  title: String!
+  books: [Book]
+  authors: [Author]
+}
+
+input createPublisherInput {
+  title: String!
+}
+
+type Query {
+  publishers: [Publisher]!
+  publisher(id: Int!): Publisher
+}
+
+type Mutation {
+  createPublisher(createPublisherInput: createPublisherInput!): Publisher
+}

@@ -1,0 +1,10 @@
+input createBookInput {
+  title: String!
+  publishedAt: String!
+  authorsIds: [Int]!
+  publisherId: Int!
+}
+
+type Mutation {
+  createBook(createBookInput: createBookInput!): Book
+}
