@@ -1,8 +1,32 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src",
+  "sourceRoot": "apps/graphql-api-books/src",
   "compilerOptions": {
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/graphql-api-books/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/graphql-api-books",
+  "projects": {
+    "graphql-api-books": {
+      "type": "application",
+      "root": "apps/graphql-api-books",
+      "entryFile": "main",
+      "sourceRoot": "apps/graphql-api-books/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/graphql-api-books/tsconfig.app.json"
+      }
+    },
+    "authors-service": {
+      "type": "application",
+      "root": "apps/authors-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/authors-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/authors-service/tsconfig.app.json"
+      }
+    }
   }
 }
