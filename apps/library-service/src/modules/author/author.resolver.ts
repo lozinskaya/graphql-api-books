@@ -10,13 +10,13 @@ import { IAuthorsService } from './authors.interface';
 export class CAuthorResolver implements OnModuleInit {
   constructor(
     @Inject('AuthorsServiceClient')
-    private readonly client: ClientGrpcProxy
+    private readonly authorsClient: ClientGrpcProxy
   ) {}
 
   private authorService: IAuthorsService;
 
   onModuleInit(): void {
-    this.authorService = this.client.getService<IAuthorsService>('CAuthorsServiceService');
+    this.authorService = this.authorsClient.getService<IAuthorsService>('CAuthorsServiceService');
   }
 
   @Mutation('createAuthor')

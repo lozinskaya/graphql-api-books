@@ -1,6 +1,8 @@
+import { Inject, OnModuleInit } from '@nestjs/common';
 import { Args, Mutation, Parent, ResolveField, Resolver, Subscription } from '@nestjs/graphql';
+import { ClientGrpcProxy } from '@nestjs/microservices';
+import { IAuthorsService } from 'apps/authors-service/src/authors-service.interface';
 import { CreateBookInput } from 'apps/library-service/src/graphql';
-import { CAuthorService } from 'apps/library-service/src/modules/author/author.service';
 import { CCreateBookInput } from 'apps/library-service/src/modules/book/dto/create-book.input';
 import { CPublisherService } from 'apps/library-service/src/modules/publisher/publisher.service';
 import { PubSub } from 'graphql-subscriptions';
@@ -13,12 +15,19 @@ enum SUBSCRIPTIONS_EVENTS {
   bookAdded = 'bookAdded',
 }
 @Resolver('Book')
-export class CCommonBookResolver {
+export class CCommonBookResolver implements OnModuleInit {
   constructor(
-    private readonly authorService: CAuthorService,
     private readonly publisherService: CPublisherService,
-    private readonly commonService: CCommonService
+    private readonly commonService: CCommonService,
+    @Inject('AuthorsServiceClient')
+    private readonly authorsClient: ClientGrpcProxy
   ) {}
+
+  private authorService: IAuthorsService;
+
+  onModuleInit(): void {
+    this.authorService = this.authorsClient.getService<IAuthorsService>('CAuthorsServiceService');
+  }
 
   @ResolveField('publisher')
   getPublisher(@Parent() book: CreateBookInput) {
