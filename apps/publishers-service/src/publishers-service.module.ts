@@ -6,6 +6,6 @@ import { CPublishersServiceService } from './publishers-service.service';
 @Module({
   imports: [],
   controllers: [CPublishersServiceController],
-  providers: [CPublishersServiceService],
+  providers: [{ provide: 'CPublishersServiceService', useClass: CPublishersServiceService }],
 })
 export class CPublishersServiceModule {}
