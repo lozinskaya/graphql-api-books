@@ -14,7 +14,7 @@ import { CAuthorResolver } from './author.resolver';
         return ClientProxyFactory.create({
           transport: Transport.GRPC,
           options: {
-            url: `localhost:3001`,
+            url: `authors:3001`,
             package: 'authors',
             protoPath: join(process.cwd(), 'apps/library-service/src/modules/author/author.proto'),
           },
