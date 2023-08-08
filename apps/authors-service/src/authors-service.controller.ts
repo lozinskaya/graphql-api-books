@@ -1,9 +1,10 @@
 import { Controller, Get } from '@nestjs/common';
-import { AuthorsServiceService } from './authors-service.service';
+
+import { CAuthorsServiceService } from './authors-service.service';
 
 @Controller()
-export class AuthorsServiceController {
-  constructor(private readonly authorsServiceService: AuthorsServiceService) {}
+export class CAuthorsServiceController {
+  constructor(private readonly authorsServiceService: CAuthorsServiceService) {}
 
   @Get()
   getHello(): string {
