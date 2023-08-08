@@ -1,6 +1,6 @@
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
-import { Publisher } from 'src/graphql';
-import { CBookService } from 'src/modules/book/book.service';
+import { Publisher } from 'apps/library-service/src/graphql';
+import { CBookService } from 'apps/library-service/src/modules/book/book.service';
 
 import { CCommonService } from '../common.service';
 

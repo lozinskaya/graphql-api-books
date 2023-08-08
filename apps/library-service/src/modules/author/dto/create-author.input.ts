@@ -1,5 +1,5 @@
+import { CreateAuthorInput } from 'apps/library-service/src/graphql';
 import { IsNotEmpty } from 'class-validator';
-import { CreateAuthorInput } from 'src/graphql';
 
 export class CCreateAuthorInput extends CreateAuthorInput {
   @IsNotEmpty()

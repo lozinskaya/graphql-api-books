@@ -1,9 +1,9 @@
 import { Args, Mutation, Parent, ResolveField, Resolver, Subscription } from '@nestjs/graphql';
+import { CreateBookInput } from 'apps/library-service/src/graphql';
+import { CAuthorService } from 'apps/library-service/src/modules/author/author.service';
+import { CCreateBookInput } from 'apps/library-service/src/modules/book/dto/create-book.input';
+import { CPublisherService } from 'apps/library-service/src/modules/publisher/publisher.service';
 import { PubSub } from 'graphql-subscriptions';
-import { CreateBookInput } from 'src/graphql';
-import { CAuthorService } from 'src/modules/author/author.service';
-import { CCreateBookInput } from 'src/modules/book/dto/create-book.input';
-import { CPublisherService } from 'src/modules/publisher/publisher.service';
 
 import { CCommonService } from '../common.service';
 

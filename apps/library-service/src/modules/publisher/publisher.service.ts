@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Publisher } from 'src/graphql';
+import { Publisher } from 'apps/library-service/src/graphql';
 
 import { CCreatePublisherInput } from './dto/create-publisher.input';
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Author } from 'src/graphql';
+import { Author } from 'apps/library-service/src/graphql';
 
 import { CCreateAuthorInput } from './dto/create-author.input';
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Book, CreateBookInput } from 'src/graphql';
+import { Book, CreateBookInput } from 'apps/library-service/src/graphql';
 
 import { CCreateBookInput } from './dto/create-book.input';
 

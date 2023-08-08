@@ -10,9 +10,9 @@ import { modules } from './modules';
     ...modules,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      typePaths: ['./**/*.graphql'],
+      typePaths: ['apps/library-service/**/*.graphql'],
       definitions: {
-        path: join(process.cwd(), 'src/graphql.ts'),
+        path: join(process.cwd(), 'apps/library-service/src/graphql.ts'),
         outputAs: 'class',
         skipResolverArgs: true,
       },

@@ -1,6 +1,6 @@
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
-import { Author } from 'src/graphql';
-import { CBookService } from 'src/modules/book/book.service';
+import { Author } from 'apps/library-service/src/graphql';
+import { CBookService } from 'apps/library-service/src/modules/book/book.service';
 
 @Resolver('Author')
 export class CCommonAuthorResolver {

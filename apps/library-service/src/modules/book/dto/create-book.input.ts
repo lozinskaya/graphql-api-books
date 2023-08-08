@@ -1,5 +1,5 @@
+import { CreateBookInput } from 'apps/library-service/src/graphql';
 import { IsNotEmpty } from 'class-validator';
-import { CreateBookInput } from 'src/graphql';
 
 export class CCreateBookInput extends CreateBookInput {
   @IsNotEmpty()
