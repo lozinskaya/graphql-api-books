@@ -6,6 +6,6 @@ import { CAuthorsServiceService } from './authors-service.service';
 @Module({
   imports: [],
   controllers: [CAuthorsServiceController],
-  providers: [CAuthorsServiceService],
+  providers: [{ provide: 'CAuthorsServiceService', useClass: CAuthorsServiceService }],
 })
 export class CAuthorsServiceModule {}

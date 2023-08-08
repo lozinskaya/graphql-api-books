@@ -4,12 +4,10 @@ import { Module } from '@nestjs/common';
 import { ClientProxyFactory, Transport, ClientGrpcProxy } from '@nestjs/microservices';
 
 import { CAuthorResolver } from './author.resolver';
-import { CAuthorService } from './author.service';
 
 @Module({
   providers: [
     CAuthorResolver,
-    CAuthorService,
     {
       provide: 'AuthorsServiceClient',
       useFactory: (): ClientGrpcProxy => {
@@ -25,6 +23,6 @@ import { CAuthorService } from './author.service';
     },
   ],
   imports: [],
-  exports: [CAuthorService],
+  exports: ['AuthorsServiceClient'],
 })
 export class CAuthorModule {}
