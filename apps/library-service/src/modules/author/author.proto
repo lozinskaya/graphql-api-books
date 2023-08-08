@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package authors;
+
+message FindAuthorsInput {
+}
+
+message Id {
+    int32 id = 1;
+}
+
+message Author {
+    int32 id = 1;
+    string firstName = 2;
+    string lastName = 3;
+}  
+
+message Authors {
+  repeated Author authors = 1;
+}  
+
+message CreateAuthor {
+  string firstName = 1;
+  string lastName = 2;
+}
+
+message CreateAuthorInput {
+  CreateAuthor createAuthorInput = 1;
+}
+
+service CAuthorsServiceService {
+  rpc FindAll (FindAuthorsInput) returns (Authors);
+  rpc Create (CreateAuthorInput) returns (Author);
+  rpc FindOne (Id) returns (Author);
+}
