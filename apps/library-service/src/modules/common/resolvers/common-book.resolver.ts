@@ -1,11 +1,12 @@
 import { Inject, OnModuleInit } from '@nestjs/common';
 import { Args, Mutation, Parent, ResolveField, Resolver, Subscription } from '@nestjs/graphql';
 import { ClientGrpcProxy } from '@nestjs/microservices';
-import { IAuthorsService } from 'apps/authors-service/src/authors-service.interface';
 import { CreateBookInput } from 'apps/library-service/src/graphql';
+import { IAuthorsService } from 'apps/library-service/src/modules/author/authors.interface';
 import { CCreateBookInput } from 'apps/library-service/src/modules/book/dto/create-book.input';
 import { CPublisherService } from 'apps/library-service/src/modules/publisher/publisher.service';
 import { PubSub } from 'graphql-subscriptions';
+import { lastValueFrom } from 'rxjs';
 
 import { CCommonService } from '../common.service';
 
@@ -35,8 +36,8 @@ export class CCommonBookResolver implements OnModuleInit {
   }
 
   @ResolveField('authors')
-  getAuthors(@Parent() book: CreateBookInput) {
-    return book.authorsIds.map((authorId) => this.authorService.findOne(authorId));
+  async getAuthors(@Parent() book: CreateBookInput) {
+    return book.authorsIds.map(async (authorId) => await lastValueFrom(this.authorService.findOne({ id: authorId })));
   }
 
   @Mutation('createBook')
