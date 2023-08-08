@@ -1,13 +1,27 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Inject } from '@nestjs/common';
+import { GrpcMethod } from '@nestjs/microservices';
 
-import { CAuthorsServiceService } from './authors-service.service';
+import { IAuthorsService, ICreateAuthorInput } from './authors-service.interface';
 
 @Controller()
 export class CAuthorsServiceController {
-  constructor(private readonly authorsServiceService: CAuthorsServiceService) {}
+  constructor(
+    @Inject('CAuthorsServiceService')
+    private readonly authorsServiceService: IAuthorsService
+  ) {}
 
-  @Get()
-  getHello(): string {
-    return this.authorsServiceService.getHello();
+  @GrpcMethod('CAuthorsServiceService', 'FindAll')
+  findAll() {
+    return { authors: this.authorsServiceService.findAll() };
+  }
+
+  @GrpcMethod('CAuthorsServiceService', 'Create')
+  create(data: { createAuthorInput: ICreateAuthorInput }) {
+    return this.authorsServiceService.create(data.createAuthorInput);
+  }
+
+  @GrpcMethod('CAuthorsServiceService', 'FindOne')
+  findOne(data: { id: number }) {
+    return this.authorsServiceService.findOne(data.id);
   }
 }
