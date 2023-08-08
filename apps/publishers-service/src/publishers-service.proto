@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package pubslihers;
+package publishers;
 
 message Id {
     int32 id = 1;
