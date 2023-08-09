@@ -31,7 +31,7 @@ message CreateBookInput {
     CreateBook createBookInput = 1;
 }
 
-service CBookService {
+service CBooksServiceService {
     rpc FindAll (FindBookInput) returns (Books);
     rpc Create (CreateBookInput) returns (Book);
     rpc FindOne (Id) returns (Book);
