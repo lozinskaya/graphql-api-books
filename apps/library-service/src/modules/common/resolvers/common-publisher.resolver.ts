@@ -22,8 +22,8 @@ export class CCommonPublisherResolver {
   }
 
   @ResolveField('books')
-  getBooks(@Parent() publisher: Publisher) {
-    return this.bookService.findByPublisherId({ id: publisher.id });
+  async getBooks(@Parent() publisher: Publisher) {
+    return (await lastValueFrom(this.bookService.findByPublisherId({ id: publisher.id }))).books;
   }
 
   @ResolveField('authors')
