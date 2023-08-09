@@ -1,11 +1,10 @@
 import { Controller, Get, Inject } from '@nestjs/common';
-
 import { GrpcMethod } from '@nestjs/microservices';
+
 import { IBookService, ICreateBookInput } from './books-service.interface';
 
 @Controller()
 export class CBooksServiceController {
-
   constructor(
     @Inject('CBooksServiceService')
     private readonly bookService: IBookService
@@ -35,5 +34,4 @@ export class CBooksServiceController {
   findByPublisherId(data: { id: number }) {
     return { books: this.bookService.findByPublisherId(data.id) };
   }
-}
 }
