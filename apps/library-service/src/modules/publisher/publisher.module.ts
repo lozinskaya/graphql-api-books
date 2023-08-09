@@ -14,7 +14,7 @@ import { CPublisherResolver } from './publisher.resolver';
         return ClientProxyFactory.create({
           transport: Transport.GRPC,
           options: {
-            url: `localhost:3002`,
+            url: `publishers:3002`,
             package: 'publishers',
             protoPath: join(process.cwd(), 'apps/library-service/src/modules/publisher/publisher.proto'),
           },
