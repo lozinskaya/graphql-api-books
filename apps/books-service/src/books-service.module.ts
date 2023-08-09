@@ -6,6 +6,6 @@ import { CBooksServiceService } from './books-service.service';
 @Module({
   imports: [],
   controllers: [CBooksServiceController],
-  providers: [CBooksServiceService],
+  providers: [{ provide: 'CBooksServiceService', useClass: CBooksServiceService }],
 })
 export class CBooksServiceModule {}
