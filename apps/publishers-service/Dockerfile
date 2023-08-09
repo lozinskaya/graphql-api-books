@@ -8,6 +8,4 @@ RUN npm install
 
 COPY . .
 
-COPY ./dist/apps/publishers-service  ./dist/apps/publishers-service
-
 CMD ["npm", "run", "start:dev", "publishers-service"]
