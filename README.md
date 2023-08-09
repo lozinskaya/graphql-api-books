@@ -1,37 +1,52 @@
 ## Links
 
-[GraphQL](http://localhost:3000/graphql) - link to playground
+[GraphQL](http://localhost:3000/graphql) - ссылка на приложение после запуска
 
-## Modules
+## Сервисы
 
-Author - module with schema, query, mutation for Authors<br />
-Book - module with schema, query, mutation for Books<br />
-Publisher - module with schema, query, mutation for Authors<br />
-Common - common module witch imports author, book and publisher modules for resolve fields
+authors-service - микросервис авторов<br />
+publishers-service - микросервис издателей<br />
+library-service - клиент, который подключается к микросервисам книг и авторов, а также содержит в себе сервис по книгам
 
-## Installation with docker
+## Запуск одной командой
 
 ```bash
 $ docker compose build && docker compose up
 ```
 
-## Installation without docker
+## Установка зависимостей
 
 ```bash
 $ npm install
 ```
 
-## Running the app without docker
-
+## Запуск сервисов
+### authors-service
+```bash
+## development
+$ npm run start authors-service
+## watch mode
+$ npm run start:dev authors-service
+## production mode
+$ npm run start:prod authors-service
+```
+### publishers-service
 ```bash
 # development
-$ npm run start
-
+$ npm run start publishers-service
 # watch mode
-$ npm run start:dev
-
+$ npm run start:dev publishers-service
 # production mode
-$ npm run start:prod
+$ npm run start:prod publishers-service
+```
+### library-service
+```bash
+# development
+$ npm run start library-service
+# watch mode
+$ npm run start:dev library-service
+# production mode
+$ npm run start:prod library-service
 ```
 
 ## Commit
