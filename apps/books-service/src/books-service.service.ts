@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
 
+import { IBook, ICreateBookInput } from './books-service.interface';
+import { CCreateBookInput } from './dto/create-book.input';
+
 @Injectable()
 export class CBooksServiceService {
   private books: (Pick<IBook, 'id'> & ICreateBookInput)[] = [
