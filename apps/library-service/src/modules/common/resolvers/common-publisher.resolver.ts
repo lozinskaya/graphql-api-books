@@ -1,21 +1,34 @@
+import { Inject } from '@nestjs/common';
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
+import { ClientGrpcProxy } from '@nestjs/microservices';
 import { Publisher } from 'apps/library-service/src/graphql';
-import { CBookService } from 'apps/library-service/src/modules/book/book.service';
+import { lastValueFrom } from 'rxjs';
 
+import { IBookService } from '../../book/book.interface';
 import { CCommonService } from '../common.service';
 
 @Resolver('Publisher')
 export class CCommonPublisherResolver {
-  constructor(private readonly bookService: CBookService, private readonly commonService: CCommonService) {}
+  constructor(
+    @Inject('BooksServiceClient')
+    private readonly bookClient: ClientGrpcProxy,
+    private readonly commonService: CCommonService
+  ) {}
+
+  private bookService: IBookService;
+
+  onModuleInit(): void {
+    this.bookService = this.bookClient.getService<IBookService>('CBooksServiceService');
+  }
 
   @ResolveField('books')
   getBooks(@Parent() publisher: Publisher) {
-    return this.bookService.findByPublisherId(publisher.id);
+    return this.bookService.findByPublisherId({ id: publisher.id });
   }
 
   @ResolveField('authors')
-  getAuthors(@Parent() publisher: Publisher) {
-    const books = this.bookService.findByPublisherId(publisher.id);
+  async getAuthors(@Parent() publisher: Publisher) {
+    const { books } = await lastValueFrom(this.bookService.findByPublisherId({ id: publisher.id }));
 
     return this.commonService.findPublisherAuthors(books);
   }
