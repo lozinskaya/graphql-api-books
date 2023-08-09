@@ -3,10 +3,10 @@ import { ClientGrpcProxy } from '@nestjs/microservices';
 import { CreateBookInput } from 'apps/library-service/src/graphql';
 import { CBookService } from 'apps/library-service/src/modules/book/book.service';
 import { CCreateBookInput } from 'apps/library-service/src/modules/book/dto/create-book.input';
-import { lastValueFrom } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 
-import { IAuthorsService } from '../author/authors.interface';
-import { IPublisherService } from '../publisher/publisher.interface';
+import { IAuthorsService, TAuthor } from '../author/authors.interface';
+import { IPublisherService, TPublisher } from '../publisher/publisher.interface';
 @Injectable()
 export class CCommonService {
   constructor(
@@ -27,24 +27,21 @@ export class CCommonService {
 
   async createBook(createBookInput: CCreateBookInput) {
     if (
-      this.isPublisherExist(createBookInput.publisherId) &&
-      (await Promise.all(createBookInput.authorsIds.map(async (authorId) => await this.isAuthorExist(authorId))).then(
-        (arr) => arr.every((item) => item)
-      ))
+      (await this.isExist<TPublisher>(createBookInput.publisherId, this.publisherService, 'Издатель')) &&
+      (await Promise.all(
+        createBookInput.authorsIds.map(
+          async (authorId) => await this.isExist<TAuthor>(authorId, this.authorService, 'Автор')
+        )
+      ).then((arr) => arr.every((item) => item)))
     )
       return this.bookService.create(createBookInput);
   }
 
-  isPublisherExist(id: number) {
-    if (this.publisherService.findOne({ id })) return true;
-    throw new Error('Издателя с id = ' + id + ' не существует');
-  }
-
-  async isAuthorExist(id: number) {
+  async isExist<T>(id: number, service: { findOne(arg0: { id: number }): Observable<T> }, name: string) {
     try {
-      if (await lastValueFrom(this.authorService.findOne({ id }))) return true;
+      if (await lastValueFrom(service.findOne({ id }))) return true;
     } catch (error) {
-      throw new Error('Автора с id = ' + id + ' не существует');
+      throw new Error(name + ' с id = ' + id + ' не существует');
     }
   }
 
