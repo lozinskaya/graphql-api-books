@@ -1,13 +1,26 @@
+import { Inject, OnModuleInit } from '@nestjs/common';
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
+import { ClientGrpcProxy } from '@nestjs/microservices';
 import { Author } from 'apps/library-service/src/graphql';
-import { CBookService } from 'apps/library-service/src/modules/book/book.service';
+import { lastValueFrom } from 'rxjs';
+
+import { IBookService } from '../../book/book.interface';
 
 @Resolver('Author')
-export class CCommonAuthorResolver {
-  constructor(private readonly bookService: CBookService) {}
+export class CCommonAuthorResolver implements OnModuleInit {
+  constructor(
+    @Inject('AuthorsServiceClient')
+    private readonly bookClient: ClientGrpcProxy
+  ) {}
+
+  private bookService: IBookService;
+
+  onModuleInit(): void {
+    this.bookService = this.bookClient.getService<IBookService>('CBooksServiceService');
+  }
 
   @ResolveField('books')
-  getBooks(@Parent() author: Author) {
-    return this.bookService.findByAuthorId(author.id);
+  async getBooks(@Parent() author: Author) {
+    return (await lastValueFrom(this.bookService.findByAuthorId({ id: author.id }))).books;
   }
 }
