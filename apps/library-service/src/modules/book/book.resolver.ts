@@ -1,18 +1,36 @@
+import { Inject, OnModuleInit } from '@nestjs/common';
 import { Args, Query, Resolver } from '@nestjs/graphql';
+import { ClientGrpcProxy } from '@nestjs/microservices';
+import { lastValueFrom } from 'rxjs';
 
-import { CBookService } from './book.service';
+import { IBookService } from './book.interface';
 
 @Resolver('Book')
-export class CBookResolver {
-  constructor(private readonly bookService: CBookService) {}
+export class CBookResolver implements OnModuleInit {
+  constructor(
+    @Inject('BooksServiceClient')
+    private readonly bookClient: ClientGrpcProxy
+  ) {}
+
+  private bookService: IBookService;
+
+  onModuleInit(): void {
+    this.bookService = this.bookClient.getService<IBookService>('CBooksServiceService');
+  }
 
   @Query('book')
-  findOne(@Args('id') id: number) {
-    return this.bookService.findOne(id);
+  async findOne(@Args('id') id: number) {
+    try {
+      const book = await lastValueFrom(this.bookService.findOne({ id }));
+
+      return book;
+    } catch (error) {
+      throw new Error('Книга с id = ' + id + ' не найдена');
+    }
   }
 
   @Query('books')
-  findAll() {
-    return this.bookService.findAll();
+  async findAll() {
+    return (await lastValueFrom(this.bookService.findAll({ data: null }))).books;
   }
 }

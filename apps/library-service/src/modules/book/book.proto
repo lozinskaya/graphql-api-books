@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package books;
+
+message Id {
+  int32 id = 1;
+}
+
+message FindBookInput {}
+
+message Book {
+  int32 id = 1;
+  string title = 2;
+  string publishedAt = 3;
+  repeated double authorsIds = 4;
+  int32 publisherId = 5;
+}  
+
+message Books {
+  repeated Book books = 1;
+}  
+
+message CreateBook {
+  string title = 2;
+  string publishedAt = 3;
+  repeated double authorsIds = 4;
+  int32 publisherId = 5;
+}
+
+message CreateBookInput {
+  CreateBook createBookInput = 1;
+}
+
+service CBooksServiceService {
+    rpc FindAll (FindBookInput) returns (Books);
+    rpc Create (CreateBookInput) returns (Book);
+    rpc FindOne (Id) returns (Book);
+    rpc FindByAuthorId(Id) returns (Books);
+    rpc FindByPublisherId(Id) returns (Books);
+}

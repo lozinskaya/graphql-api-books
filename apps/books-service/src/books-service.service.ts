@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { Book, CreateBookInput } from 'apps/library-service/src/graphql';
 
+import { IBook, ICreateBookInput } from './books-service.interface';
 import { CCreateBookInput } from './dto/create-book.input';
 
 @Injectable()
-export class CBookService {
-  private books: (Pick<Book, 'id'> & CreateBookInput)[] = [
+export class CBooksServiceService {
+  private books: (Pick<IBook, 'id'> & ICreateBookInput)[] = [
     { id: 1, title: 'Братья Карамазовы', publishedAt: '02-07-2022', authorsIds: [1], publisherId: 1 },
     { id: 2, title: 'Идиот', publishedAt: '25-07-2022', authorsIds: [1], publisherId: 1 },
     { id: 3, title: 'Двенадцать стульев', publishedAt: '25-07-2022', authorsIds: [3, 4], publisherId: 2 },
