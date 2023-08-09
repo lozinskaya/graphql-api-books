@@ -33,6 +33,7 @@ export class CCommonBookResolver implements OnModuleInit {
     this.authorService = this.authorsClient.getService<IAuthorsService>('CAuthorsServiceService');
     this.publisherService = this.publisherClient.getService<IPublisherService>('CPublishersServiceService');
   }
+
   @ResolveField('publisher')
   getPublisher(@Parent() book: CreateBookInput) {
     return this.publisherService.findOne({ id: book.publisherId });
@@ -44,16 +45,16 @@ export class CCommonBookResolver implements OnModuleInit {
   }
 
   @Mutation('createBook')
-  createBook(@Args('createBookInput') createBookInput: CCreateBookInput) {
-    const bookAdded = this.commonService.createBook(createBookInput);
+  async createBook(@Args('createBookInput') createBookInput: CCreateBookInput) {
+    const bookAdded = await lastValueFrom(await this.commonService.createBook(createBookInput));
 
     pubSub.publish(SUBSCRIPTIONS_EVENTS.bookAdded, { bookAdded: bookAdded });
 
     return bookAdded;
   }
 
-  @Subscription('bookAdded')
-  catCreated() {
-    return pubSub.asyncIterator('bookAdded');
+  @Subscription(SUBSCRIPTIONS_EVENTS.bookAdded)
+  bookAdded() {
+    return pubSub.asyncIterator(SUBSCRIPTIONS_EVENTS.bookAdded);
   }
 }
