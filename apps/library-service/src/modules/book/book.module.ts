@@ -14,7 +14,7 @@ import { CBookResolver } from './book.resolver';
         return ClientProxyFactory.create({
           transport: Transport.GRPC,
           options: {
-            url: `authors:3003`,
+            url: `books:3003`,
             package: 'books',
             protoPath: join(process.cwd(), 'apps/library-service/src/modules/book/book.proto'),
           },
