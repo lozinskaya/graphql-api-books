@@ -25,7 +25,7 @@ message CreatePublisherInput {
 CreatePublisher createPublisherInput = 1;
 }
 
-service CPublisherService {
+service CPublishersServiceService {
   rpc FindAll (FindPublishersInput) returns (Publishers);
   rpc Create (CreatePublisherInput) returns (Publisher);
   rpc FindOne (Id) returns (Publisher);

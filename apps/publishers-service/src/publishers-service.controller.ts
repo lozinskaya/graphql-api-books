@@ -10,17 +10,17 @@ export class CPublishersServiceController {
     private readonly publishersServiceService: IPublisherService
   ) {}
 
-  @GrpcMethod('CPublisherService', 'FindAll')
+  @GrpcMethod('CPublishersServiceService', 'FindAll')
   findAll() {
     return { publishers: this.publishersServiceService.findAll() };
   }
 
-  @GrpcMethod('CPublisherService', 'Create')
+  @GrpcMethod('CPublishersServiceService', 'Create')
   create(data: { createPublisherInput: ICreatePublisherInput }) {
     return this.publishersServiceService.create(data.createPublisherInput);
   }
 
-  @GrpcMethod('CPublisherService', 'FindOne')
+  @GrpcMethod('CPublishersServiceService', 'FindOne')
   findOne(data: { id: number }) {
     return this.publishersServiceService.findOne(data.id);
   }
