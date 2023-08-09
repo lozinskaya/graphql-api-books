@@ -3,23 +3,26 @@ import { ClientGrpcProxy } from '@nestjs/microservices';
 import { CreateBookInput } from 'apps/library-service/src/graphql';
 import { CBookService } from 'apps/library-service/src/modules/book/book.service';
 import { CCreateBookInput } from 'apps/library-service/src/modules/book/dto/create-book.input';
-import { CPublisherService } from 'apps/library-service/src/modules/publisher/publisher.service';
 import { lastValueFrom } from 'rxjs';
 
 import { IAuthorsService } from '../author/authors.interface';
+import { IPublisherService } from '../publisher/publisher.interface';
 @Injectable()
 export class CCommonService {
   constructor(
-    private readonly publisherService: CPublisherService,
     private readonly bookService: CBookService,
     @Inject('AuthorsServiceClient')
-    private readonly authorsClient: ClientGrpcProxy
+    private readonly authorsClient: ClientGrpcProxy,
+    @Inject('PublishersServiceClient')
+    private readonly publisherClient: ClientGrpcProxy
   ) {}
 
   private authorService: IAuthorsService;
+  private publisherService: IPublisherService;
 
   onModuleInit(): void {
     this.authorService = this.authorsClient.getService<IAuthorsService>('CAuthorsServiceService');
+    this.publisherService = this.publisherClient.getService<IPublisherService>('CPublishersServiceService');
   }
 
   async createBook(createBookInput: CCreateBookInput) {
@@ -33,7 +36,7 @@ export class CCommonService {
   }
 
   isPublisherExist(id: number) {
-    if (this.publisherService.findOne(id)) return true;
+    if (this.publisherService.findOne({ id })) return true;
     throw new Error('Издателя с id = ' + id + ' не существует');
   }
 
