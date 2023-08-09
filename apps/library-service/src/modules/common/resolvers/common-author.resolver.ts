@@ -9,7 +9,7 @@ import { IBookService } from '../../book/book.interface';
 @Resolver('Author')
 export class CCommonAuthorResolver implements OnModuleInit {
   constructor(
-    @Inject('AuthorsServiceClient')
+    @Inject('BooksServiceClient')
     private readonly bookClient: ClientGrpcProxy
   ) {}
 
