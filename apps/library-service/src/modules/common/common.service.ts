@@ -1,16 +1,17 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientGrpcProxy } from '@nestjs/microservices';
 import { CreateBookInput } from 'apps/library-service/src/graphql';
-import { CBookService } from 'apps/library-service/src/modules/book/book.service';
 import { CCreateBookInput } from 'apps/library-service/src/modules/book/dto/create-book.input';
 import { Observable, lastValueFrom } from 'rxjs';
 
 import { IAuthorsService, TAuthor } from '../author/authors.interface';
+import { IBookService } from '../book/book.interface';
 import { IPublisherService, TPublisher } from '../publisher/publisher.interface';
 @Injectable()
 export class CCommonService {
   constructor(
-    private readonly bookService: CBookService,
+    @Inject('BooksServiceClient')
+    private readonly bookClient: ClientGrpcProxy,
     @Inject('AuthorsServiceClient')
     private readonly authorsClient: ClientGrpcProxy,
     @Inject('PublishersServiceClient')
@@ -19,10 +20,12 @@ export class CCommonService {
 
   private authorService: IAuthorsService;
   private publisherService: IPublisherService;
+  private bookService: IBookService;
 
   onModuleInit(): void {
     this.authorService = this.authorsClient.getService<IAuthorsService>('CAuthorsServiceService');
     this.publisherService = this.publisherClient.getService<IPublisherService>('CPublishersServiceService');
+    this.bookService = this.bookClient.getService<IBookService>('CBooksServiceService');
   }
 
   async createBook(createBookInput: CCreateBookInput) {
@@ -34,7 +37,7 @@ export class CCommonService {
         )
       ).then((arr) => arr.every((item) => item)))
     )
-      return this.bookService.create(createBookInput);
+      return this.bookService.create({ createBookInput });
   }
 
   async isExist<T>(id: number, service: { findOne(arg0: { id: number }): Observable<T> }, name: string) {
