@@ -45,15 +45,21 @@ export class CCommonService {
     }
   }
 
-  findPublisherAuthors(books: CreateBookInput[]) {
-    const authors = books.reduce(
-      (acc, book) =>
-        acc.concat(
-          book.authorsIds.map(async (authorId) => await lastValueFrom(this.authorService.findOne({ id: authorId })))
-        ),
-      []
+  async findPublisherAuthors(books: CreateBookInput[]) {
+    const authors = await Promise.all(
+      books.reduce(
+        (acc, book) =>
+          acc.concat(
+            book.authorsIds.map(async (authorId) => await lastValueFrom(this.authorService.findOne({ id: authorId })))
+          ),
+        [] as Promise<TAuthor>[]
+      )
     );
 
-    return new Set(authors);
+    return authors.reduce((acc, author) => {
+      if (!acc.find((item) => item.id === author.id)) acc.push(author);
+
+      return acc;
+    }, [] as TAuthor[]);
   }
 }
