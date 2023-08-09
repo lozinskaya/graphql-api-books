@@ -14,6 +14,7 @@ services:
     restart: always
     depends_on:
       - "authors"
+      - "publishers"
     command: npm run start:dev
   authors:
     container_name: authors
@@ -27,3 +28,15 @@ services:
       - 3001:3001
     restart: always
     command: npm run start:dev authors-service
+  publishers:
+    container_name: publishers
+    build:
+      context: .
+      dockerfile: ./apps/publishers-service/Dockerfile
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - 3002:3002
+    restart: always
+    command: npm run start:dev publishers-service

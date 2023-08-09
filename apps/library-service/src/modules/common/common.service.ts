@@ -3,57 +3,63 @@ import { ClientGrpcProxy } from '@nestjs/microservices';
 import { CreateBookInput } from 'apps/library-service/src/graphql';
 import { CBookService } from 'apps/library-service/src/modules/book/book.service';
 import { CCreateBookInput } from 'apps/library-service/src/modules/book/dto/create-book.input';
-import { CPublisherService } from 'apps/library-service/src/modules/publisher/publisher.service';
-import { lastValueFrom } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 
-import { IAuthorsService } from '../author/authors.interface';
+import { IAuthorsService, TAuthor } from '../author/authors.interface';
+import { IPublisherService, TPublisher } from '../publisher/publisher.interface';
 @Injectable()
 export class CCommonService {
   constructor(
-    private readonly publisherService: CPublisherService,
     private readonly bookService: CBookService,
     @Inject('AuthorsServiceClient')
-    private readonly authorsClient: ClientGrpcProxy
+    private readonly authorsClient: ClientGrpcProxy,
+    @Inject('PublishersServiceClient')
+    private readonly publisherClient: ClientGrpcProxy
   ) {}
 
   private authorService: IAuthorsService;
+  private publisherService: IPublisherService;
 
   onModuleInit(): void {
     this.authorService = this.authorsClient.getService<IAuthorsService>('CAuthorsServiceService');
+    this.publisherService = this.publisherClient.getService<IPublisherService>('CPublishersServiceService');
   }
 
   async createBook(createBookInput: CCreateBookInput) {
     if (
-      this.isPublisherExist(createBookInput.publisherId) &&
-      (await Promise.all(createBookInput.authorsIds.map(async (authorId) => await this.isAuthorExist(authorId))).then(
-        (arr) => arr.every((item) => item)
-      ))
+      (await this.isExist<TPublisher>(createBookInput.publisherId, this.publisherService, 'Издатель')) &&
+      (await Promise.all(
+        createBookInput.authorsIds.map(
+          async (authorId) => await this.isExist<TAuthor>(authorId, this.authorService, 'Автор')
+        )
+      ).then((arr) => arr.every((item) => item)))
     )
       return this.bookService.create(createBookInput);
   }
 
-  isPublisherExist(id: number) {
-    if (this.publisherService.findOne(id)) return true;
-    throw new Error('Издателя с id = ' + id + ' не существует');
-  }
-
-  async isAuthorExist(id: number) {
+  async isExist<T>(id: number, service: { findOne(arg0: { id: number }): Observable<T> }, name: string) {
     try {
-      if (await lastValueFrom(this.authorService.findOne({ id }))) return true;
+      if (await lastValueFrom(service.findOne({ id }))) return true;
     } catch (error) {
-      throw new Error('Автора с id = ' + id + ' не существует');
+      throw new Error(name + ' с id = ' + id + ' не существует');
     }
   }
 
-  findPublisherAuthors(books: CreateBookInput[]) {
-    const authors = books.reduce(
-      (acc, book) =>
-        acc.concat(
-          book.authorsIds.map(async (authorId) => await lastValueFrom(this.authorService.findOne({ id: authorId })))
-        ),
-      []
+  async findPublisherAuthors(books: CreateBookInput[]) {
+    const authors = await Promise.all(
+      books.reduce(
+        (acc, book) =>
+          acc.concat(
+            book.authorsIds.map(async (authorId) => await lastValueFrom(this.authorService.findOne({ id: authorId })))
+          ),
+        [] as Promise<TAuthor>[]
+      )
     );
 
-    return new Set(authors);
+    return authors.reduce((acc, author) => {
+      if (!acc.find((item) => item.id === author.id)) acc.push(author);
+
+      return acc;
+    }, [] as TAuthor[]);
   }
 }

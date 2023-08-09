@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { Publisher } from 'apps/library-service/src/graphql';
 
-import { CCreatePublisherInput } from './dto/create-publisher.input';
+import { IPublisher, ICreatePublisherInput } from './publishers-service.interface';
 
 @Injectable()
-export class CPublisherService {
-  private publishers: Publisher[] = [
+export class CPublishersServiceService {
+  private publishers: IPublisher[] = [
     {
       id: 1,
       title: 'Эксмо',
@@ -24,7 +23,7 @@ export class CPublisherService {
     return this.publishers.find((publisher) => publisher.id === id);
   }
 
-  create(createPublisherInput: CCreatePublisherInput) {
+  create(createPublisherInput: ICreatePublisherInput) {
     const newPublisher = {
       id: this.publishers.length + 1,
       ...createPublisherInput,

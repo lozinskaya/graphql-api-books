@@ -4,10 +4,10 @@ import { ClientGrpcProxy } from '@nestjs/microservices';
 import { CreateBookInput } from 'apps/library-service/src/graphql';
 import { IAuthorsService } from 'apps/library-service/src/modules/author/authors.interface';
 import { CCreateBookInput } from 'apps/library-service/src/modules/book/dto/create-book.input';
-import { CPublisherService } from 'apps/library-service/src/modules/publisher/publisher.service';
 import { PubSub } from 'graphql-subscriptions';
 import { lastValueFrom } from 'rxjs';
 
+import { IPublisherService } from '../../publisher/publisher.interface';
 import { CCommonService } from '../common.service';
 
 const pubSub = new PubSub();
@@ -15,24 +15,27 @@ const pubSub = new PubSub();
 enum SUBSCRIPTIONS_EVENTS {
   bookAdded = 'bookAdded',
 }
+
 @Resolver('Book')
 export class CCommonBookResolver implements OnModuleInit {
   constructor(
-    private readonly publisherService: CPublisherService,
     private readonly commonService: CCommonService,
     @Inject('AuthorsServiceClient')
-    private readonly authorsClient: ClientGrpcProxy
+    private readonly authorsClient: ClientGrpcProxy,
+    @Inject('PublishersServiceClient')
+    private readonly publisherClient: ClientGrpcProxy
   ) {}
 
   private authorService: IAuthorsService;
+  private publisherService: IPublisherService;
 
   onModuleInit(): void {
     this.authorService = this.authorsClient.getService<IAuthorsService>('CAuthorsServiceService');
+    this.publisherService = this.publisherClient.getService<IPublisherService>('CPublishersServiceService');
   }
-
   @ResolveField('publisher')
   getPublisher(@Parent() book: CreateBookInput) {
-    return this.publisherService.findOne(book.publisherId);
+    return this.publisherService.findOne({ id: book.publisherId });
   }
 
   @ResolveField('authors')

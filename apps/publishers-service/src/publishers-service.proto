@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package publishers;
+
+message Id {
+    int32 id = 1;
+}
+
+message FindPublishersInput {}
+
+message Publisher {
+    int32 id = 1;
+    string title = 2;
+}  
+
+message Publishers {
+    repeated Publisher publishers = 1;
+}  
+
+message CreatePublisher {
+    string title = 1;
+}
+
+message CreatePublisherInput {
+CreatePublisher createPublisherInput = 1;
+}
+
+service CPublishersServiceService {
+  rpc FindAll (FindPublishersInput) returns (Publishers);
+  rpc Create (CreatePublisherInput) returns (Publisher);
+  rpc FindOne (Id) returns (Publisher);
+}
