@@ -30,7 +30,7 @@ export class CBooksServiceController {
     return { books: this.bookService.findByAuthorId(data.id) };
   }
 
-  @GrpcMethod('CBookService', 'FindByPublisherId')
+  @GrpcMethod('CBooksServiceService', 'FindByPublisherId')
   findByPublisherId(data: { id: number }) {
     return { books: this.bookService.findByPublisherId(data.id) };
   }
