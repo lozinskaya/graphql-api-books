@@ -36,6 +36,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/publishers-service/tsconfig.app.json"
       }
+    },
+    "books-service": {
+      "type": "application",
+      "root": "apps/books-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/books-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/books-service/tsconfig.app.json"
+      }
     }
   }
 }
